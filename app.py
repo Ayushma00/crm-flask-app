@@ -18,12 +18,14 @@ headers={'authorization':'Bearer {}'.format(app.config['AIRTABLE_KEY']),'content
 def index():
     return render_template('index.html', **locals())
 
-@app.route('/users',methods=['GET','POST'])
+@app.route('/users',methods=['GET','POST','DELETE'])
 def users():
     url='https://api.airtable.com/v0/appZ8wloM4omloj0T/Team?maxRecords=10&view=Grid%20view'
     r=requests.get(url,headers=headers)
     result=json.loads(r.text)
     print(result)
+    if request.method=='DELETE':
+        print(request.data)
     if request.method=='POST':
         payload={
         "records": [

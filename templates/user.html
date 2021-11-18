@@ -13,7 +13,7 @@
                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
 
-
+<!-- Add new data -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Addnew data</button>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -85,6 +85,75 @@
 
 
 
+<!-- Edit  -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Enter the form</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/users_edit" method="post">
+
+          <div class="row">
+<div class="col-lg-12">
+  <div class="form-group">
+    <input type="text" class="form-control" name="teamId" placeholder="Enter Team Id">
+  </div>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-12">
+  <div class="form-group">
+    <input type="text" class="form-control" name="FirstName" placeholder="Enter First Name">
+  </div>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-12">
+  <div class="form-group">
+    <input type="text" class="form-control" name="LastName" placeholder="Enter Last Name">
+  </div>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-12">
+  <div class="form-group">
+    <input type="text" class="form-control" name="JobTitle" placeholder="Enter Job Title">
+  </div>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-12">
+  <div class="form-group">
+    <input type="text" class="form-control" name="Email" placeholder="Enter Email">
+  </div>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-12">
+  <div class="form-group">
+    <input type="text" class="form-control" name="PhoneNumber" placeholder="Enter Phone Number">
+  </div>
+</div>
+</div>
+<input type="text" class="form-control" name="rowid">
+<div class="modal-footer">
+
+
+</div>
+<button type="submit" class="btn btn-primary">Edit data</button>
+<button type="submit" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  </form>
+</div>
+
+</div>
+</div>
+</div>
+<br>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -111,7 +180,7 @@
                         <td>{{user.fields.Email}}</td>
                         <td>{{user.fields.JobTitle}}</td>
                         <td>{{user.fields.PhoneNumber}}</td>
-                        <td  > <button data-id="{{user.id}}" type="button" name="button" class="btn btn-outline-danger delete-btn"><i class="fas fa-trash-alt"></i></button> </td>
+                        <td>  <button data-toggle='modal' data-target="#editModal" data-user="{{user}}" type="button" name="button" class="btn btn-outline-primary edit-btn"><i class="fas fa-edit"></i></button> <button data-id="{{user.id}}" type="button" name="button" class="btn btn-outline-danger delete-btn"><i class="fas fa-trash-alt"></i></button> </td>
 
                     </tr>
                   {% endfor %}
@@ -142,6 +211,34 @@ $( ".delete-btn" ).click(function(e) {
           location.reload();
       }
 });
+$(".edit-btn" ).click(function() {
 
+  var user=JSON.parse($(this).attr("data-user").replaceAll("'", "\""));
+  var id=user.id;
+  var id = user.id;
+  var teamid = user.fields.teamid;
+  var first_name = user.fields.FirstName;
+  var last_name = user.fields.LastName;
+  var job_title = user.fields.JobTitle;
+  var email = user.fields.Email;
+  var phone_no = user.fields.PhoneNumber;
+  $('#editModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var modal = $(this)
+  modal.find('input')[6].value = id;
+  modal.find('input')[6].style.visibility = "hidden";
+  modal.find('input')[6].style.display = "none";
+  modal.find('input')[0].value = teamid;
+  modal.find('input')[1].value = first_name;
+  modal.find('input')[2].value = last_name;
+  modal.find('input')[3].value = job_title;
+  modal.find('input')[4].value = email;
+  modal.find('input')[5].value = phone_no;
+
+});
+
+
+
+});
 </script>
 {% endblock %}

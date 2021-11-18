@@ -22,7 +22,26 @@ def delete(rowId):
     print("https://api.airtable.com/v0/appZ8wloM4omloj0T/Team/{}".format(rowId)),
     requests.delete('https://api.airtable.com/v0/appZ8wloM4omloj0T/Team/{}'.format(rowId),headers=headers)
     return redirect(url_for('users'))
+@app.route('/users_edit',methods=["POST"])
+def users_edit():
 
+    payload = {
+        "records": [
+            {
+            "id": request.form['rowid'],
+                "fields": {
+                    "teamid": request.form['teamId'],
+                    "FirstName": request.form['FirstName'],
+                    "LastName": request.form['LastName'],
+                    "JobTitle": request.form['JobTitle'],
+                    "Email": request.form['Email'],
+                    "PhoneNumber": request.form['PhoneNumber']
+                }
+            }
+        ]
+    }
+    requests.put(' https://api.airtable.com/v0/appZ8wloM4omloj0T/Team', json=payload, headers=headers)
+    return redirect(url_for('users'))
 @app.route('/users',methods=['GET','POST'])
 def users():
     url='https://api.airtable.com/v0/appZ8wloM4omloj0T/Team?maxRecords=10&view=Grid%20view'

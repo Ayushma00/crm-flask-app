@@ -17,15 +17,17 @@ headers={'authorization':'Bearer {}'.format(app.config['AIRTABLE_KEY']),'content
 @app.route('/')
 def index():
     return render_template('index.html', **locals())
+@app.route('/delete/<string:rowId>',methods=['DELETE'])
+def delete(rowId):
+    print("https://api.airtable.com/v0/appZ8wloM4omloj0T/Team/{}".format(rowId)),
+    requests.delete('https://api.airtable.com/v0/appZ8wloM4omloj0T/Team/{}'.format(rowId),headers=headers)
+    return redirect(url_for('users'))
 
-@app.route('/users',methods=['GET','POST','DELETE'])
+@app.route('/users',methods=['GET','POST'])
 def users():
     url='https://api.airtable.com/v0/appZ8wloM4omloj0T/Team?maxRecords=10&view=Grid%20view'
     r=requests.get(url,headers=headers)
     result=json.loads(r.text)
-    print(result)
-    if request.method=='DELETE':
-        print(request.data)
     if request.method=='POST':
         payload={
         "records": [

@@ -133,17 +133,14 @@
 
 
 });
-$( ".delete-btn" ).click(function() {
-console.log($(this).attr("data-id"));
-fetch('/users', {
-      method: 'DELETE',
-      data: $(this).attr("data-id")
-      console.log(data);
-    })
-    .then(response => response.json())
-    .then(result => {
-      console.log("Deleted data");
-    });
+$( ".delete-btn" ).click(function(e) {
+  e.preventDefault();
+      if (window.confirm("Are you sure you want to delete the User?")) {
+        fetch('/delete/'+$(this).attr("data-id"), {
+              method: 'DELETE'
+          });
+          location.reload();
+      }
 });
 
 </script>

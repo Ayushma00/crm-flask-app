@@ -4,8 +4,7 @@ class Config(object):
     TESTING = False
 
 class DevelopmentConfig(Config):
-    SECRET_KEY = "this-is-a-super-secret-key"
-    AIRTABLE_KEY='keyG8kz0bI3WypTox'
+    AIRTABLE_KEY='this-is-secret-key'
 
 config = {
     'development': DevelopmentConfig,
